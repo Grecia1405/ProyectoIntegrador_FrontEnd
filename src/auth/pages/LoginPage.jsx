@@ -12,13 +12,11 @@ export const LoginPage = () => {
     const { errorMessage, startLogin } = useAuthStore();
     const [error, setError] = useState(false);
 
-
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm(loginFormFields);
 
     const loginSubmit = (e) => {
         e.preventDefault();
         startLogin({ email: loginEmail, password: loginPassword });
-
     }
 
     useEffect(() => {

@@ -7,13 +7,13 @@ import { useAuthStore } from '../hook/useAuthStore'
 import { ThreeCircles } from 'react-loader-spinner'
 import { MainUsuario } from '../usuario/pages/MainUsuario'
 import { MainAdmin } from '../admin/pages/MainAdmin'
+import { Registro } from '../admin/usuarios/Registro'
+import { Editar } from '../admin/usuarios/Editar'
 
 
 export const AppRouter = () => {
 
     const { user, status, checkAuthToken } = useAuthStore();
-
-    console.log(user);
 
     useEffect(() => {
         checkAuthToken();
@@ -38,13 +38,10 @@ export const AppRouter = () => {
         )
     }
 
-
-    /* const authStatus = 'not-authenticated' */
-
     return (
         <Routes>
             {
-                (status === 'not-authenticated')
+                (status === 'not-authenticated' || user.actividad_usuario === '1')
                     ? (
                         <>
                             <Route path='/auth/*' element={<LoginPage />} />
@@ -54,6 +51,8 @@ export const AppRouter = () => {
                     : (user.idArea === 1) ? (
                         <>
                             <Route path='/usuarios' element={<MainAdmin />} />
+                            <Route path='/usuarios/registro' element={<Registro />} />
+                            <Route path='/usuarios/editar/:id' element={<Editar />} />
                             <Route path='/*' element={<Navigate to="/usuarios" />} />
                         </>
                     ) : (

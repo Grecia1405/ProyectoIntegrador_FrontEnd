@@ -1,8 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import asistenciaApi from '../../api/asistenciaApi';
 
 export const Tabla = ({ usuarios }) => {
-    return (
 
+    const navigate = useNavigate();
+
+    const eliminarUsuario = async (idUsuario) => {
+        const { data } = await asistenciaApi.delete(`/usuario/eliminar/${idUsuario}`);
+        console.log(data);
+    }
+
+
+    return (
         <div className="flex flex-col mt-3">
             <div className="overflow-x-auto">
                 <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
@@ -37,29 +47,30 @@ export const Tabla = ({ usuarios }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {usuarios.map(usuario => (
-                                    <tr onClick={() => { console.log(usuario.idUsuario) }} key={usuario.idUsuario} className="bg-white border-b cursor-pointer">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">{usuario.dni}</td>
+                                {usuarios.map(({ idUsuario, nombre, apellido, email, dni, area, tarifa_hora, actividad_usuario }) => (
+                                    <tr key={idUsuario} className="bg-white border-b cursor-pointer">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">{dni}</td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {usuario.nombre} {usuario.apellido}
+                                            {nombre} {apellido}
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {usuario.email}
+                                            {email}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {usuario.dni}
+                                            {dni}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {usuario.area.descripcion}
+                                            {area.descripcion}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {usuario.tarifa_hora}
+                                            {tarifa_hora}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {usuario.actividad_usuario == 0 ? 'Activo' : 'Inactivo'}
+                                            {actividad_usuario === 0 ? 'Activo' : 'Inactivo'}
                                         </td>
-                                        <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <button className='p-2 bg-yellow-500 text-white font-semibold rounded-md'>Editar</button>
+                                        <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-3">
+                                            <button onClick={() => navigate(`/usuarios/editar/${idUsuario}`)} className='p-2 bg-yellow-500 text-white font-semibold rounded-md'>Editar</button>
+                                            <button onClick={() => { eliminarUsuario(idUsuario) }} className='p-2 bg-red-500 text-white font-semibold rounded-md'>Eliminar</button>
                                         </td>
                                     </tr>
                                 ))}
