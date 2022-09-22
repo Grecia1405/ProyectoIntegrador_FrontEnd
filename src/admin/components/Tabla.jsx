@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import asistenciaApi from '../../api/asistenciaApi';
+import Swal from 'sweetalert2'
 
 export const Tabla = ({ usuarios }) => {
 
@@ -8,6 +9,8 @@ export const Tabla = ({ usuarios }) => {
 
     const eliminarUsuario = async (idUsuario) => {
         const { data } = await asistenciaApi.delete(`/usuario/eliminar/${idUsuario}`);
+        Swal.fire('La cuenta del usuario está inactiva');
+        navigate(`/usuarios}`)
         console.log(data);
     }
 
@@ -63,10 +66,10 @@ export const Tabla = ({ usuarios }) => {
                                             {area.descripcion}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {tarifa_hora}
+                                            {`S/.${tarifa_hora}`}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {actividad_usuario === 0 ? 'Activo' : 'Inactivo'}
+                                            {actividad_usuario === "0" ? 'Activo' : 'Inactivo'}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-3">
                                             <button onClick={() => navigate(`/usuarios/editar/${idUsuario}`)} className='p-2 bg-yellow-500 text-white font-semibold rounded-md'>Editar</button>

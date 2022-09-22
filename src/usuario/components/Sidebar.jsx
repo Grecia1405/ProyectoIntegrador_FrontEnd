@@ -29,7 +29,7 @@ export const Sidebar = () => {
                                     className="w-36 mx-auto"
                                 />
                                 <div className="flex justify-center mt-3">
-                                    <span className="font-bold text-center">{user.nombre} - {user.idArea === 1 ? 'Administrador' : ''}</span>
+                                    <span className="font-bold text-center">{user.nombre}</span>
                                 </div>
                             </li>
                         </ul>

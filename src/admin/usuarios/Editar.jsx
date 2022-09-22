@@ -11,7 +11,7 @@ export const Editar = () => {
                 <Sidebar />
                 <div className='w-full p-5 h-full md:h-screen bg-gray-100'>
                     <div className='bg-white rounded-xl p-2 h-full shadow-xl'>
-                        <h2 className='text-center text-3xl font-semibold my-16 uppercase'>Editar usuario</h2>
+                        <h2 className='text-center text-3xl font-semibold my-12 uppercase'>Editar usuario</h2>
                         <EditarFormulario />
                     </div>
                 </div>
