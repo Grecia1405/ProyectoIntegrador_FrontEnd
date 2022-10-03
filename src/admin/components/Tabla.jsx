@@ -8,8 +8,15 @@ export const Tabla = ({ usuarios }) => {
     const navigate = useNavigate();
 
     const eliminarUsuario = async (idUsuario) => {
-        const { data } = await asistenciaApi.delete(`/usuario/eliminar/${idUsuario}`);
+        const { data } = await asistenciaApi.put(`/usuario/eliminar/${idUsuario}`);
         Swal.fire('La cuenta del usuario está inactiva');
+        navigate(`/usuarios}`)
+        console.log(data);
+    }
+
+    const restaurarUsuario = async (idUsuario) => {
+        const { data } = await asistenciaApi.put(`/usuario/restaurar/${idUsuario}`);
+        Swal.fire('La cuenta del usuario se activó nuevamente');
         navigate(`/usuarios}`)
         console.log(data);
     }
@@ -73,7 +80,11 @@ export const Tabla = ({ usuarios }) => {
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-3">
                                             <button onClick={() => navigate(`/usuarios/editar/${idUsuario}`)} className='p-2 bg-yellow-500 text-white font-semibold rounded-md'>Editar</button>
-                                            <button onClick={() => { eliminarUsuario(idUsuario) }} className='p-2 bg-red-500 text-white font-semibold rounded-md'>Eliminar</button>
+                                            {actividad_usuario == 0
+                                                ?
+                                                <button onClick={() => { eliminarUsuario(idUsuario) }} className='p-2 bg-red-500 text-white font-semibold rounded-md'>Eliminar</button>
+                                                : <button onClick={() => { restaurarUsuario(idUsuario) }} className='p-2 bg-blue-500 text-white font-semibold rounded-md'>Restaurar</button>
+                                            }
                                         </td>
                                     </tr>
                                 ))}

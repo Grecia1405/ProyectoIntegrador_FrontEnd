@@ -29,13 +29,17 @@ export const EditarFormulario = () => {
 
     console.log(errorMessage);
 
-    const { nombre, apellido, fec_nacimiento, dni, email, password, tipo, tarifa_hora, idArea, onInputChange } = useForm(usuarioFind)
+    const { nombre, apellido, fec_nacimiento, dni, email, password, tipo, tarifa_hora, idArea, onInputChange } = useForm(usuarioFind);
+
+    const [tipoForm, setTipoForm] = useState(tipo);
+
+    const [areaForm, setAreaForm] = useState(idArea);
 
     const editSubmit = (e) => {
 
         e.preventDefault();
 
-        if (!nombre || !apellido || !fec_nacimiento || !dni || !email || !password || !tipo || !tarifa_hora || !idArea) {
+        if (!nombre || !apellido || !fec_nacimiento || !dni || !email || !password || !tarifa_hora) {
             setError(true);
             setMensaje('Todos los campos son obligatorios');
             setTimeout(() => {
@@ -64,7 +68,7 @@ export const EditarFormulario = () => {
                 idUsuario: usuarioFind.idUsuario, nombre: nombre, apellido: apellido,
                 fec_nacimiento: fec_nacimiento, dni: dni,
                 email: email, password: password,
-                tipo: tipo, tarifa_hora: tarifa_hora, idArea: idArea,
+                tipo: tipoForm, tarifa_hora: tarifa_hora, idArea: areaForm,
                 updatedByUser: user.idUsuario
             })
 
@@ -149,11 +153,19 @@ export const EditarFormulario = () => {
 
                         <div>
                             <label className="text-gray-800">Tipo</label>
-                            <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
+                            <select className="form-select appearance-none block w-full px-4 py-2 mt-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
+                            border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                value={tipoForm}
+                                onChange={e => setTipoForm(e.target.value)}
+                            >
+                                <option value="0">Trabaja feriado</option>
+                                <option value="1">No trabaja</option>
+                            </select>
+                            {/* <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="tipo"
                                 value={tipo}
                                 onChange={onInputChange}
-                            />
+                            /> */}
                         </div>
 
                         <div>
@@ -167,11 +179,19 @@ export const EditarFormulario = () => {
 
                         <div>
                             <label className="text-gray-800">Área</label>
-                            <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
+                            <select className="form-select appearance-none block w-full px-4 py-2 mt-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
+                            border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                value={areaForm}
+                                onChange={e => setAreaForm(e.target.value)}
+                            >
+                                <option value="1">Administración</option>
+                                <option value="2">Almacén</option>
+                            </select>
+                            {/* <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="idArea"
                                 value={idArea}
                                 onChange={onInputChange}
-                            />
+                            /> */}
                         </div>
                     </div>
 

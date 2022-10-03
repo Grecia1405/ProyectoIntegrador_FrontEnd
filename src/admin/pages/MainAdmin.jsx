@@ -22,8 +22,8 @@ export const MainAdmin = () => {
     return (
         <div className='flex'>
             <Sidebar />
-            <div className='w-full p-5 h-full md:h-screen bg-gray-100'>
-                <div className='bg-white rounded-xl p-2 h-full shadow-xl'>
+            <div className='w-full p-5 '>
+                <div className='bg-white rounded-xl p-2 shadow-xl'>
                     <h2 className='text-center text-3xl font-semibold my-8 uppercase'>Lista de usuarios</h2>
                     <div className='w-full flex justify-between px-8'>
                         <input className='px-3 py-1.5 border border-solid border-gray-300 rounded transition ease-in-out focus:outline-none' type="search" placeholder="Buscar usuario" />

@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import asistenciaApi from '../../api/asistenciaApi'
 import { useAuthStore } from '../../hook/useAuthStore'
 import { useForm } from '../../hook/useForm'
 import { useUsuarioStore } from '../../hook/useUsuarioStore'
@@ -19,21 +20,49 @@ const registerForm = {
 
 export const RegistroFormulario = () => {
 
+    const [tipoForm, setTipoForm] = useState('');
+    const [areaForm, setAreaForm] = useState('');
+
     const { user } = useAuthStore();
 
-    const { startSavingUser, errorMessage } = useUsuarioStore();
+    const { startSavingUser } = useUsuarioStore();
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [mensaje, setMensaje] = useState('');
+    const [usuarios, setUsuarios] = useState([]);
 
     const { nombre, apellido, fec_nacimiento, dni, email, password, tipo, tarifa_hora, idArea, onInputChange, onResetForm } = useForm(registerForm)
+
+    const listarUsuarios = async () => {
+        const { data } = await asistenciaApi.get('usuario/');
+        setUsuarios(data.usuarios_All);
+    }
+
+    const emails = [];
+    const dnis = [];
+
+    console.log(emails);
+    console.log(dnis);
+
+    usuarios.map(usuario => {
+        emails.push(usuario.email);
+        dnis.push(usuario.dni);
+    });
+
+    useEffect(() => {
+        listarUsuarios();
+    }, [])
 
     const registroSubmit = async (e) => {
 
         /* TODO: Validaciones pendientes */
         e.preventDefault();
 
-        if (!nombre || !apellido || !fec_nacimiento || !dni || !email || !password || !tipo || !tarifa_hora || !idArea) {
+        const tipo_val = document.getElementById('tipo').value;
+        const area_val = document.getElementById('area').value;
+
+
+        if (!nombre || !apellido || !fec_nacimiento || !dni || !email || !password || !tarifa_hora || tipo_val === "-1" || area_val === "-1") {
             setError(true);
             setMensaje('Todos los campos son obligatorios');
             setTimeout(() => {
@@ -49,9 +78,25 @@ export const RegistroFormulario = () => {
                 setMensaje('');
             }, 3000)
             return;
-        } else if (dni.trim().length != 8) {
+        } /* else if (dni.trim().length != 8) {
             setError(true);
-            setMensaje('El dni debe tener 8 caracteres');
+            setMensaje('El dni debe tener 8 caracteres o ya existe');
+            setTimeout(() => {
+                setError(false);
+                setMensaje('');
+            }, 3000)
+            return;
+        } */ else if (dnis.includes(dni)) {
+            setError(true);
+            setMensaje('El DNI ya existe');
+            setTimeout(() => {
+                setError(false);
+                setMensaje('');
+            }, 3000)
+            return;
+        } else if (emails.includes(email)) {
+            setError(true);
+            setMensaje('El email ya existe');
             setTimeout(() => {
                 setError(false);
                 setMensaje('');
@@ -62,7 +107,7 @@ export const RegistroFormulario = () => {
                 nombre: nombre, apellido: apellido,
                 fec_nacimiento: fec_nacimiento, dni: dni,
                 email: email, password: password,
-                tipo: tipo, tarifa_hora: tarifa_hora, idArea: idArea,
+                tipo: tipoForm, tarifa_hora: tarifa_hora, idArea: areaForm,
                 createdByUser: user.idUsuario
             });
 
@@ -72,13 +117,12 @@ export const RegistroFormulario = () => {
             }, 3000)
 
             onResetForm();
-
+            setTipoForm('');
+            setAreaForm('');
         }
-
-
     }
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (errorMessage !== undefined) {
             setError(true);
         }
@@ -87,8 +131,7 @@ export const RegistroFormulario = () => {
             setError(false);
         }, 3000)
 
-    }, [errorMessage])
-
+    }, [errorMessage]) */
 
     return (
         <>
@@ -129,6 +172,8 @@ export const RegistroFormulario = () => {
                             <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="dni"
                                 value={dni}
+                                minLength={8}
+                                maxLength={8}
                                 onChange={onInputChange}
                             />
                         </div>
@@ -158,11 +203,21 @@ export const RegistroFormulario = () => {
 
                         <div>
                             <label className="text-gray-800">Tipo</label>
-                            <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
+                            <select className="form-select appearance-none block w-full px-4 py-2 mt-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
+                            border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                id="tipo"
+                                value={tipoForm}
+                                onChange={e => setTipoForm(e.target.value)}
+                            >
+                                <option value="-1">Seleccione un tipo</option>
+                                <option value="0">Trabaja feriado</option>
+                                <option value="1">No trabaja</option>
+                            </select>
+                            {/* <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="tipo"
                                 value={tipo}
                                 onChange={onInputChange}
-                            />
+                            /> */}
                         </div>
 
                         <div>
@@ -176,11 +231,21 @@ export const RegistroFormulario = () => {
 
                         <div>
                             <label className="text-gray-800">Área</label>
-                            <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
+                            <select className="form-select appearance-none block w-full px-4 py-2 mt-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
+                            border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                id="area"
+                                value={areaForm}
+                                onChange={e => setAreaForm(e.target.value)}
+                            >
+                                <option value="-1">Seleccione un área</option>
+                                <option value="1">Administración</option>
+                                <option value="2">Almacén</option>
+                            </select>
+                            {/* <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="idArea"
                                 value={idArea}
                                 onChange={onInputChange}
-                            />
+                            /> */}
                         </div>
                     </div>
 
