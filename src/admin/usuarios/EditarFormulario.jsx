@@ -22,22 +22,37 @@ export const EditarFormulario = () => {
         })();
     }, [id])
 
-    const { startUpdateUser, errorMessage } = useUsuarioStore();
+    const { startUpdateUser } = useUsuarioStore();
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [mensaje, setMensaje] = useState('');
 
-    console.log(errorMessage);
-
     const { nombre, apellido, fec_nacimiento, dni, email, password, tipo, tarifa_hora, idArea, onInputChange } = useForm(usuarioFind);
 
-    const [tipoForm, setTipoForm] = useState(tipo);
+    const [tipoForm, setTipoForm] = useState('');
+    const [areaForm, setAreaForm] = useState('');
 
-    const [areaForm, setAreaForm] = useState(idArea);
+    useEffect(() => {
+        if (tipo == 0) {
+            setTipoForm('0');
+        }
+        if (tipo == 1) {
+            setTipoForm('1');
+        }
+        if (idArea == 1) {
+            setAreaForm('1');
+        }
+        if (idArea == 2) {
+            setAreaForm('2');
+        }
+    }, [tipo, idArea])
 
     const editSubmit = (e) => {
 
         e.preventDefault();
+
+        const regexNomApe = new RegExp("[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ\\s]{2,}");
+        const regexDni = new RegExp("[0-9]{8}$");
 
         if (!nombre || !apellido || !fec_nacimiento || !dni || !email || !password || !tarifa_hora) {
             setError(true);
@@ -47,17 +62,25 @@ export const EditarFormulario = () => {
                 setMensaje('');
             }, 3000)
             return;
-        } else if (nombre.trim().length < 2 || apellido.trim().length < 2) {
+        } else if (!regexNomApe.test(nombre) || !regexNomApe.test(apellido)) {
             setError(true);
-            setMensaje('El nombre y apellido deben tener 2 a más caracteres');
+            setMensaje('El nombre y apellido deben tener 2 a más caracteres y deben ser solo letras');
             setTimeout(() => {
                 setError(false);
                 setMensaje('');
             }, 3000)
             return;
-        } else if (dni.trim().length != 8) {
+        } else if (!regexDni.test(dni)) {
             setError(true);
             setMensaje('El dni debe tener 8 caracteres');
+            setTimeout(() => {
+                setError(false);
+                setMensaje('');
+            }, 3000)
+            return;
+        } else if (tarifa_hora <= 0.0) {
+            setError(true);
+            setMensaje('Ingrese una tarifa válida');
             setTimeout(() => {
                 setError(false);
                 setMensaje('');
@@ -67,7 +90,7 @@ export const EditarFormulario = () => {
             startUpdateUser({
                 idUsuario: usuarioFind.idUsuario, nombre: nombre, apellido: apellido,
                 fec_nacimiento: fec_nacimiento, dni: dni,
-                email: email, password: password,
+                email: email, //password: password,
                 tipo: tipoForm, tarifa_hora: tarifa_hora, idArea: areaForm,
                 updatedByUser: user.idUsuario
             })
@@ -87,7 +110,7 @@ export const EditarFormulario = () => {
         <>
             <section className="w-5/6 p-6 mx-auto bg-white rounded-md">
                 <form onSubmit={editSubmit}>
-                    <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
                         <div>
                             <label className="text-gray-800">Nombre</label>
                             <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
@@ -116,16 +139,9 @@ export const EditarFormulario = () => {
                                 onChange={onInputChange}
                             />
                         </div>
+                    </div>
 
-                        <div>
-                            <label className="text-gray-800">DNI</label>
-                            <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
-                                name="dni"
-                                value={dni}
-                                onChange={onInputChange}
-                                disabled={true}
-                            />
-                        </div>
+                    <div className="grid grid-cols-1 gap-6 mt-12 sm:grid-cols-2">
 
                         <div>
                             <label className="text-gray-800">Email</label>
@@ -139,6 +155,21 @@ export const EditarFormulario = () => {
                         </div>
 
                         <div>
+                            <label className="text-gray-800">DNI</label>
+                            <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
+                                name="dni"
+                                value={dni}
+                                onChange={onInputChange}
+                                disabled={true}
+                            />
+                        </div>
+
+
+
+
+
+
+                        {/* <div>
                             <label className="text-gray-800">Password</label>
                             <input type="password" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="password"
@@ -146,15 +177,16 @@ export const EditarFormulario = () => {
                                 onChange={onInputChange}
                                 autoComplete="false"
                             />
-                        </div>
+                        </div> */}
                     </div>
 
-                    <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 mt-12 sm:grid-cols-2 md:grid-cols-3">
 
                         <div>
                             <label className="text-gray-800">Tipo</label>
                             <select className="form-select appearance-none block w-full px-4 py-2 mt-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
                             border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                name="tipoForm"
                                 value={tipoForm}
                                 onChange={e => setTipoForm(e.target.value)}
                             >
@@ -181,6 +213,7 @@ export const EditarFormulario = () => {
                             <label className="text-gray-800">Área</label>
                             <select className="form-select appearance-none block w-full px-4 py-2 mt-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
                             border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
+                                name="areaForm"
                                 value={areaForm}
                                 onChange={e => setAreaForm(e.target.value)}
                             >
@@ -195,7 +228,7 @@ export const EditarFormulario = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-end mt-6">
+                    <div className="flex justify-end mt-10">
                         <button type='submit' className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600">Guardar</button>
                     </div>
 

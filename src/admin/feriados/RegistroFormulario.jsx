@@ -21,7 +21,7 @@ export const RegistroFormulario = () => {
     const [success, setSuccess] = useState(false);
     const [mensaje, setMensaje] = useState('');
     const [feriados, setFeriados] = useState([]);
-    
+
 
     const { anio, fecha, descripcion, onInputChange, onResetForm } = useForm(registerForm)
 
@@ -64,8 +64,8 @@ export const RegistroFormulario = () => {
             }, 3000)
             return;
         } else {
-            startSavingFeriado ({
-                anio: anio, 
+            startSavingFeriado({
+                anio: anio,
                 fecha: fecha,
                 descripcion: descripcion
             });
@@ -94,7 +94,7 @@ export const RegistroFormulario = () => {
                                 value={anio}
                                 onChange={onInputChange}
                                 autoComplete="false"
-                                
+
                             />
                         </div>
 
@@ -105,7 +105,7 @@ export const RegistroFormulario = () => {
                                 value={fecha}
                                 onChange={onInputChange}
                                 autoComplete="false"
-                                
+
                             />
                         </div>
 
@@ -115,10 +115,10 @@ export const RegistroFormulario = () => {
                                 name="descripcion"
                                 value={descripcion}
                                 onChange={onInputChange}
-                                
+
                             />
-                        </div>                       
-                    </div>                  
+                        </div>
+                    </div>
                     <div className="flex justify-end mt-6">
                         <button type='submit' className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-600">Guardar</button>
                     </div>

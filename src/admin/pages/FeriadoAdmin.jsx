@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import asistenciaApi from '../../api/asistenciaApi';
 import { Sidebar } from '../components/Sidebar'
-import { Tabla } from '../components/Tabla';
 import { TablaFeriado } from '../components/TablaFeriado';
 
 export const FeriadoAdmin = () => {

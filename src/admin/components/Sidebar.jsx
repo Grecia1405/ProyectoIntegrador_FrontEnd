@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../hook/useAuthStore';
 
@@ -26,7 +26,7 @@ export const Sidebar = () => {
                         <h1 className="text-center text-3xl mb-6 font-bold uppercase ">Asistenciapp</h1>
                         <ul className="space-y-2">
                             <li>
-                                <img src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png"
+                                <img src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" alt="img_user"
                                     className="w-36 mx-auto"
                                 />
                                 <div className="flex justify-center mt-3">
@@ -42,10 +42,10 @@ export const Sidebar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <a href="#" className="flex items-center p-2 rounded-lg transition duration-500 hover:bg-blue-800">
+                                <Link to="/actividades" className="flex items-center p-2 rounded-lg transition duration-500 hover:bg-blue-800">
                                     <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-100 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path></svg>
                                     <span className="ml-3">Actividades</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <Link to="/feriados" className="flex items-center p-2 rounded-lg transition duration-500 hover:bg-blue-800">

@@ -41,9 +41,6 @@ export const RegistroFormulario = () => {
     const emails = [];
     const dnis = [];
 
-    console.log(emails);
-    console.log(dnis);
-
     usuarios.map(usuario => {
         emails.push(usuario.email);
         dnis.push(usuario.dni);
@@ -61,6 +58,9 @@ export const RegistroFormulario = () => {
         const tipo_val = document.getElementById('tipo').value;
         const area_val = document.getElementById('area').value;
 
+        const regexNomApe = new RegExp("[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ\\s]{2,}");
+        const regexDni = new RegExp("[0-9]{8}");
+
 
         if (!nombre || !apellido || !fec_nacimiento || !dni || !email || !password || !tarifa_hora || tipo_val === "-1" || area_val === "-1") {
             setError(true);
@@ -70,25 +70,33 @@ export const RegistroFormulario = () => {
                 setMensaje('');
             }, 3000)
             return;
-        } else if (nombre.trim().length < 2 || apellido.trim().length < 2) {
+        } else if (!regexNomApe.test(nombre) || !regexNomApe.test(apellido)) {
             setError(true);
-            setMensaje('El nombre y apellido deben tener 2 a más caracteres');
+            setMensaje('El nombre y apellido deben tener 2 a más caracteres y deben ser solo letras');
             setTimeout(() => {
                 setError(false);
                 setMensaje('');
             }, 3000)
             return;
-        } /* else if (dni.trim().length != 8) {
-            setError(true);
-            setMensaje('El dni debe tener 8 caracteres o ya existe');
-            setTimeout(() => {
-                setError(false);
-                setMensaje('');
-            }, 3000)
-            return;
-        } */ else if (dnis.includes(dni)) {
+        } else if (dnis.includes(dni)) {
             setError(true);
             setMensaje('El DNI ya existe');
+            setTimeout(() => {
+                setError(false);
+                setMensaje('');
+            }, 3000)
+            return;
+        } else if (tarifa_hora <= 0.0) {
+            setError(true);
+            setMensaje('Ingrese una tarifa válida');
+            setTimeout(() => {
+                setError(false);
+                setMensaje('');
+            }, 3000)
+            return;
+        } else if (!regexDni.test(dni)) {
+            setError(true);
+            setMensaje('El dni debe tener 8 caracteres');
             setTimeout(() => {
                 setError(false);
                 setMensaje('');
@@ -172,7 +180,7 @@ export const RegistroFormulario = () => {
                             <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="dni"
                                 value={dni}
-                                minLength={8}
+                                /* minLength={8} */
                                 maxLength={8}
                                 onChange={onInputChange}
                             />

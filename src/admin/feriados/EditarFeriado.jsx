@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import asistenciaApi from '../../api/asistenciaApi'
-import { useAuthStore } from '../../hook/useAuthStore'
 import { useForm } from '../../hook/useForm'
 import { useFeriado } from '../../hook/useFeriado'
 
@@ -10,8 +9,6 @@ import { useFeriado } from '../../hook/useFeriado'
 export const EditarFeriado = () => {
 
     const { id } = useParams();
-
-    const { user } = useAuthStore();
 
     const [feriadoFind, setFeriadoFind] = useState({})
 
@@ -23,11 +20,11 @@ export const EditarFeriado = () => {
         })();
     }, [id])
 
-    const {startUpdateFeriado } = useFeriado();
+    const { startUpdateFeriado } = useFeriado();
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [mensaje, setMensaje] = useState('');
-   
+
     const { anio, fecha, descripcion, onInputChange } = useForm(feriadoFind)
 
     const editSubmit = (e) => {
@@ -44,8 +41,8 @@ export const EditarFeriado = () => {
             return;
         } else {
             startUpdateFeriado({
-                idFeriado: feriadoFind.idFeriado, 
-                anio: anio, 
+                idFeriado: feriadoFind.idFeriado,
+                anio: anio,
                 fecha: fecha,
                 descripcion: descripcion
             })

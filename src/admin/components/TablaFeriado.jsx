@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import asistenciaApi from '../../api/asistenciaApi';
 import Swal from 'sweetalert2'
@@ -13,7 +13,7 @@ export const TablaFeriado = ({ feriados }) => {
         navigate(`/feriados`)
         console.log(data);
     }
- 
+
     return (
         <div className="flex flex-col mt-3">
             <div className="overflow-x-auto">
@@ -30,7 +30,7 @@ export const TablaFeriado = ({ feriados }) => {
                                     </th>
                                     <th scope="col" className="text-sm font-medium text-white px-6 py-4">
                                         Descripción
-                                    </th>                                    
+                                    </th>
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Acciones
                                     </th>
@@ -41,16 +41,16 @@ export const TablaFeriado = ({ feriados }) => {
                                     <tr key={idFeriado} className="bg-white border-b cursor-pointer">
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">{anio}</td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {fecha} 
+                                            {fecha}
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {descripcion}
-                                        </td>                                        
+                                        </td>
                                         {<td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-3">
                                             <button onClick={() => navigate(`/feriados/editar/${idFeriado}`)} className='p-2 bg-yellow-500 text-white font-semibold rounded-md'>Editar</button>
 
                                             <button onClick={() => { eliminarFeriado(idFeriado) }} className='p-2 bg-red-500 text-white font-semibold rounded-md'>Eliminar</button>
-                                            
+
                                         </td>}
                                     </tr>
                                 ))}

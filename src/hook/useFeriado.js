@@ -1,16 +1,15 @@
-import React from 'react'
 import asistenciaApi from '../api/asistenciaApi';
 
-export const useFeriado = () => {    
-   
+export const useFeriado = () => {
+
     const startSavingFeriado = async (formulario) => {
 
         try {
             const { data } = await asistenciaApi.post('/feriado/registro', formulario);
-            console.log(data);           
+            console.log(data);
 
         } catch (error) {
-            
+
             console.log(error);
         }
     }
@@ -23,7 +22,7 @@ export const useFeriado = () => {
             const { data } = await asistenciaApi.put(`/feriado/editar/${formulario.idFeriado}`, formulario);
             console.log(data);
 
-        } catch (error) {            
+        } catch (error) {
             console.log(error);
         }
     }
