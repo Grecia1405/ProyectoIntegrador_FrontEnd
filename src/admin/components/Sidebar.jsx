@@ -48,10 +48,10 @@ export const Sidebar = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="flex items-center p-2 rounded-lg transition duration-500 hover:bg-blue-800">
-                                    <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-gray-100 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
-                                    <span className="ml-3">Feriados</span>
-                                </a>
+                                <Link to="/feriados" className="flex items-center p-2 rounded-lg transition duration-500 hover:bg-blue-800">
+                                    <svg aria-hidden="true" className="flex-shrink-0 w-5 h-5 text-gray-100 transition duration-75" focusable="false" data-prefix="fas" data-icon="gem" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"></path></svg>
+                                    <span className="ml-4">Feriados</span>
+                                </Link>
                             </li>
                             <li>
                                 <button onClick={startLogout} href="#" className="w-full flex items-center p-2 rounded-lg transition duration-500 hover:bg-blue-800">

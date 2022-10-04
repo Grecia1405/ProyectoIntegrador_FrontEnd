@@ -10,6 +10,9 @@ import { MainAdmin } from '../admin/pages/MainAdmin'
 import { Registro } from '../admin/usuarios/Registro'
 import { Editar } from '../admin/usuarios/Editar'
 
+import { FeriadoAdmin } from '../admin/pages/FeriadoAdmin'
+import { RegistroFeriado } from '../admin/feriados/RegistroFeriado'
+import { Editar as EditarF } from '../admin/feriados/Editar'
 
 export const AppRouter = () => {
 
@@ -54,6 +57,11 @@ export const AppRouter = () => {
                             <Route path='/usuarios/registro' element={<Registro />} />
                             <Route path='/usuarios/editar/:id' element={<Editar />} />
                             <Route path='/*' element={<Navigate to="/usuarios" />} />
+
+                            <Route path='/feriados' element={<FeriadoAdmin />} />
+                            <Route path='/feriados/registro' element={<RegistroFeriado />} />
+                            <Route path='/feriados/editar/:id' element={<EditarF />} />
+                            <Route path='/*' element={<Navigate to="/feriados" />} />
                         </>
                     ) : (
                         <>
