@@ -15,7 +15,7 @@ export const Sidebar = () => {
         setButtonPos(!buttonPos);
     }
 
-    console.log(user);
+    /* console.log(user); */
 
     return (
         <div className='mr-0 lg:mr-64'>

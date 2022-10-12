@@ -5,14 +5,29 @@ import { LoginPage } from '../auth/pages/LoginPage'
 import { useAuthStore } from '../hook/useAuthStore'
 
 import { ThreeCircles } from 'react-loader-spinner'
-import { MainUsuario } from '../usuario/pages/MainUsuario'
-import { MainAdmin } from '../admin/pages/MainAdmin'
-import { Registro } from '../admin/usuarios/Registro'
-import { Editar } from '../admin/usuarios/Editar'
 
+/* Páginas de Usuarios */
+import { MainAdmin } from '../admin/pages/MainAdmin'
+import { Registro as RegistroUsuario } from '../admin/usuarios/Registro'
+import { Editar as EditarUSuario } from '../admin/usuarios/Editar'
+
+/* Páginas de Feriados */
 import { FeriadoAdmin } from '../admin/pages/FeriadoAdmin'
 import { RegistroFeriado } from '../admin/feriados/RegistroFeriado'
-import { Editar as EditarF } from '../admin/feriados/Editar'
+import { Editar as EditarFeriado } from '../admin/feriados/Editar'
+
+/* Páginas de Actividades */
+import { ActividadAdmin } from '../admin/pages/ActividadAdmin'
+import { RegistroActividad } from '../admin/actividades/RegistroActividad'
+import { EditarActividad } from '../admin/actividades/EditarActividad'
+
+/* Páginas de Actividades - Empleado */
+import { MainUsuario } from '../usuario/pages/MainUsuario'
+
+/* Páginas de Horarios - General */
+import { HorariosPage } from '../horarios/pages/HorariosPage'
+import { IngresoForm } from '../horarios/components/IngresoForm'
+
 
 export const AppRouter = () => {
 
@@ -47,21 +62,32 @@ export const AppRouter = () => {
                 (status === 'not-authenticated' || user.actividad_usuario === '1')
                     ? (
                         <>
+                            <Route path='/horarios/*' element={<HorariosPage />} />
+                            <Route path='/horario/ingreso/:id' element={<IngresoForm />} />
+                            <Route path='/horario/salida/:id' element={<HorariosPage />} />
+                            <Route path='/horarios/*' element={<Navigate to="/horarios" />} />
+
                             <Route path='/auth/*' element={<LoginPage />} />
                             <Route path='/*' element={<Navigate to="/auth/login" />} />
+
                         </>
                     )
                     : (user.idArea === 1) ? (
                         <>
                             <Route path='/usuarios' element={<MainAdmin />} />
-                            <Route path='/usuarios/registro' element={<Registro />} />
-                            <Route path='/usuarios/editar/:id' element={<Editar />} />
+                            <Route path='/usuarios/registro' element={<RegistroUsuario />} />
+                            <Route path='/usuarios/editar/:id' element={<EditarUSuario />} />
                             <Route path='/*' element={<Navigate to="/usuarios" />} />
 
                             <Route path='/feriados' element={<FeriadoAdmin />} />
                             <Route path='/feriados/registro' element={<RegistroFeriado />} />
-                            <Route path='/feriados/editar/:id' element={<EditarF />} />
+                            <Route path='/feriados/editar/:id' element={<EditarFeriado />} />
                             <Route path='/*' element={<Navigate to="/feriados" />} />
+
+                            <Route path='/actividades' element={<ActividadAdmin />} />
+                            <Route path='/actividades/registro' element={<RegistroActividad />} />
+                            <Route path='/actividades/editar/:id' element={<EditarActividad />} />
+                            <Route path='/*' element={<Navigate to="/actividades" />} />
                         </>
                     ) : (
                         <>
