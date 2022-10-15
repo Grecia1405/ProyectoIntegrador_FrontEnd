@@ -70,13 +70,15 @@ export const IngresoForm = () => {
     return (
 
         <div className="w-full h-screen flex flex-col justify-center items-center bg-gray-100">
-            <div className=" bg-pink-600 flex justify-center w-96 py-3 rounded-xl">
-                <h1 className="text-4xl text-white" ref={h1}>{ti()}</h1>
-            </div>
 
             <div className='my-8 mr-60'>
                 <Link to="/horarios" className='px-3 py-2 rounded-xl text-white bg-green-600'>Volver a listado</Link>
             </div>
+
+            <div className=" bg-pink-600 flex justify-center w-96 py-3 rounded-xl mb-3">
+                <h1 className="text-4xl text-white" ref={h1}>{ti()}</h1>
+            </div>
+
             <div className='relative w-5/6 md:w-3/6 lg:w-2/6 xl:w-96 border p-5 rounded-xl bg-white'>
 
                 <div className='text-center mt-5 mb-10 flex justify-center'>
@@ -116,7 +118,7 @@ export const IngresoForm = () => {
 
                     <button className='w-full text-center text-white text-lg font-bold p-3 rounded-xl mb-3 duration-500 bg-blue-600 hover:bg-blue-700'
                         type='submit'>
-                        Iniciar sesión
+                        Marcar asistencia
                     </button>
 
                 </form>

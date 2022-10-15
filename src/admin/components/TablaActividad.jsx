@@ -36,7 +36,7 @@ export const TablaActividad = ({ actividades }) => {
                                     <th scope="col" className="text-sm font-medium text-white px-6 py-4">
                                         Nombre completo
                                     </th>
-                                    <th scope="col" className="text-sm font-medium text-white px-6 py-4">
+                                    <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Día
                                     </th>
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
@@ -51,12 +51,12 @@ export const TablaActividad = ({ actividades }) => {
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Fin
                                     </th>
-                                    <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
+                                    {/* <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Estado
                                     </th>
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Acciones
-                                    </th>
+                                    </th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,7 +66,7 @@ export const TablaActividad = ({ actividades }) => {
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {usuario.nombre} {usuario.apellido}
                                         </td>
-                                        <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <td className="text-sm text-left text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {dia}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -81,9 +81,9 @@ export const TablaActividad = ({ actividades }) => {
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {fin_actividad}
                                         </td>
-                                        <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {/* <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {estado === "0" ? 'Activo' : 'Finalizado'}
-                                        </td>
+                                        </td> */}
                                         {/* <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {actividad_usuario === "0" ? 'Activo' : 'Inactivo'}
                                         </td>

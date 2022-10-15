@@ -15,8 +15,6 @@ export const ActividadAdmin = () => {
         setActividades(data.actividades_All);
     }
 
-    console.log(actividades);
-
     useEffect(() => {
         listarActividades();
     }, [])

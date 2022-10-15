@@ -8,8 +8,6 @@ export const useActividadStore = () => {
 
         const { idActividad, idUsuario, dia, ingreso_actividad, salida_actividad, inicio_actividad, fin_actividad } = formulario;
 
-        console.log(idActividad, idUsuario, dia, ingreso_actividad, salida_actividad, inicio_actividad, fin_actividad);
-
         const { data } = await asistenciaApi.post('/actividad/crear', formulario);
 
         actividadDia(formulario);

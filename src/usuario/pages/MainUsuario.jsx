@@ -5,7 +5,7 @@ import { TablaHorarios } from '../components/TablaHorarios';
 
 export const MainUsuario = () => {
 
-    const [horarios, setHorarios] = useState([]);
+    /* const [horarios, setHorarios] = useState([]);
 
     const listarHorarios = async () => {
         const { data } = await asistenciaApi.get('horario/');
@@ -14,16 +14,16 @@ export const MainUsuario = () => {
 
     useEffect(() => {
         listarHorarios();
-    }, [])
+    }, []) */
 
 
     return (
         <div className='flex'>
             <Sidebar />
-            <div className='w-full p-5 bg-gray-100'>
+            <div className='w-full p-5 '>
                 <div className='bg-white rounded-lg p-2 h-full shadow-xl'>
                     <h2 className='text-center text-3xl font-semibold my-8 uppercase'>Lista de horarios</h2>
-                    <TablaHorarios horarios={horarios} />
+                    <TablaHorarios /* horarios={horarios} */ />
                 </div>
             </div>
         </div>

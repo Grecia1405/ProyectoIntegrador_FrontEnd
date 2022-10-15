@@ -33,9 +33,22 @@ export const RegistroActividadForm = ({ usuarios }) => {
 
     const { startSavingActividad } = useActividadStore();
 
+    const [actividades, setActividades] = useState(null);
+
+    const obtenerActividades = async () => {
+        const { data } = await asistenciaApi.get('actividad/');
+        setActividades(data.actividades_All);
+    }
+
+    let fechaInicio = new Date().toISOString().split("T")[0];
+
+    useEffect(() => {
+        obtenerActividades();
+    }, [])
+
+    console.log(actividades);
 
     const { idUsuario, dia, ingreso_actividad, salida_actividad, inicio_actividad, fin_actividad, onInputChange, onResetForm } = useForm(registerForm);
-
 
     const registroSubmit = (e) => {
 
@@ -48,51 +61,52 @@ export const RegistroActividadForm = ({ usuarios }) => {
 
         const compararFechas = isAfter(new Date(inicio_actividad), new Date(fin_actividad));
 
-        if (idUsuario_val === '-1' || dia_val === '-1' || !ingreso_actividad || !salida_actividad || !inicio_actividad || !fin_actividad) {
-            setError('Todos los campos son obligatorios.');
-            setTimeout(() => {
-                setError(null);
-            }, 3000)
-            return;
-        } else if (ingreso_actividad < '08:00' || salida_actividad > '21:00') {
-            setError('El horario de trabajo es de 8:00 a.m. a 6:00 p.m.');
-            setTimeout(() => {
-                setError(null);
-            }, 3000)
-            return;
-        } else if (ingreso_actividad >= salida_actividad) {
-            setError('Ingrese un horario correcto.');
-            setTimeout(() => {
-                setError(null);
-            }, 3000)
-            return;
-        } /* else if (fechaInicio) {
-            setError('La fecha inicio tiene que ser mayor a la de hoy.');
-            setTimeout(() => {
-                setError(null);
-            }, 3000)
-            return;
-        } */ else if (compararFechas) {
-            setError('La fecha fin tiene que ser superior a la del inicio.');
-            setTimeout(() => {
-                setError(null);
-            }, 3000)
-            return;
-        } else {
-            startSavingActividad({
-                idActividad: id_actividad, idUsuario: idUsuarioForm, dia: diaForm, ingreso_actividad: ingreso_actividad,
-                salida_actividad: salida_actividad, inicio_actividad: inicio_actividad,
-                fin_actividad: fin_actividad
-            })
+        for (let i = 0; i <= actividades.length; i++) {
+            if (idUsuario_val === '-1' || dia_val === '-1' || !ingreso_actividad || !salida_actividad || !inicio_actividad || !fin_actividad) {
+                setError('Todos los campos son obligatorios.');
+                setTimeout(() => {
+                    setError(null);
+                }, 3000)
+                return;
+            } else if (ingreso_actividad < '08:00' || salida_actividad > '21:00') {
+                setError('El horario de trabajo es de 8:00 a.m. a 9:00 p.m.');
+                setTimeout(() => {
+                    setError(null);
+                }, 3000)
+                return;
+            } else if (ingreso_actividad >= salida_actividad) {
+                setError('Ingrese un horario correcto.');
+                setTimeout(() => {
+                    setError(null);
+                }, 3000)
+                return;
+            } else if (compararFechas) {
+                setError('La fecha fin tiene que ser superior a la del inicio.');
+                setTimeout(() => {
+                    setError(null);
+                }, 3000)
+                return;
+            } else if (actividades[i]?.idUsuario == idUsuario_val && actividades[i]?.dia == dia_val && actividades[i]?.salida_actividad > ingreso_actividad && actividades[i].fin_actividad > inicio_actividad) {
+                setError('El horario indicado se cruza con otra actividad.');
+                setTimeout(() => {
+                    setError(null);
+                }, 3000)
+                return;
+            } else {
+                startSavingActividad({
+                    idActividad: id_actividad, idUsuario: idUsuarioForm, dia: diaForm, ingreso_actividad: ingreso_actividad,
+                    salida_actividad: salida_actividad, inicio_actividad: inicio_actividad,
+                    fin_actividad: fin_actividad
+                })
+                setSuccess(true);
+                setTimeout(() => {
+                    setSuccess(false);
+                }, 3000)
 
-            setSuccess(true);
-            setTimeout(() => {
-                setSuccess(false);
-            }, 3000)
-
-            onResetForm();
-            setidUsuarioForm('');
-            setDiaForm('');
+                onResetForm();
+                setidUsuarioForm('');
+                setDiaForm('');
+            }
         }
     }
 
@@ -161,6 +175,7 @@ export const RegistroActividadForm = ({ usuarios }) => {
                                 name="inicio_actividad"
                                 value={inicio_actividad}
                                 onChange={onInputChange}
+                                min={fechaInicio}
                             />
                         </div>
 
@@ -170,6 +185,7 @@ export const RegistroActividadForm = ({ usuarios }) => {
                                 name="fin_actividad"
                                 value={fin_actividad}
                                 onChange={onInputChange}
+                                min={fechaInicio}
                             />
                         </div>
                     </div>
