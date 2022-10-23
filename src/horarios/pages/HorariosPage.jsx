@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { format } from 'date-fns';
+import { differenceInMinutes, format, getMinutes, sub } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom'
 import asistenciaApi from '../../api/asistenciaApi';
 
@@ -31,7 +31,7 @@ export const HorariosPage = () => {
     let listadoHorarios = [];
     let horariosDiaActual = [];
 
-    const fechaActual = format(new Date(), 'yyyy-MM-dd');
+    let fechaActual = format(new Date(), 'yyyy-MM-dd');
 
     actividades.map(actividad => {
         horarios.map(horario => {
@@ -44,15 +44,80 @@ export const HorariosPage = () => {
                     fecha: horario.fechaAsistencia,
                     ingreso: actividad.ingreso_actividad,
                     salida: actividad.salida_actividad,
-                    estado: horario.idEstado
+                    hora_ingreso: horario.hora_ingreso,
+                    hora_salida: horario.hora_salida,
+                    estado: horario?.estado?.idEstado
                 })
             }
         })
     })
 
+    const ti = () => {
+        let fechahora = new Date();
+        let hora = fechahora.getHours();
+        let minuto = fechahora.getMinutes();
+        let segundo = fechahora.getSeconds();
+        let minutoFormat;
+        let segundoFormat;
+
+        if (minuto < 10) {
+            minutoFormat = `0${minuto}`
+        } else {
+            minutoFormat = minuto;
+        }
+        if (segundo < 10) {
+            segundoFormat = `0${segundo}`
+        } else {
+            segundoFormat = segundo;
+        }
+        return `${hora}:${minutoFormat}:${segundoFormat}`;
+    };
+
     listadoHorarios.map(horarioDia => {
+
         if (horarioDia.fecha == fechaActual) {
-            horariosDiaActual.push(horarioDia);
+
+            let fechahora = new Date();
+            let hora = fechahora.getHours();
+            let minuto = fechahora.getMinutes();
+            let segundo = fechahora.getSeconds();
+
+            let fechaActualSplit = fechaActual.split('-');
+
+            let hora_ingreso = horarioDia.ingreso;
+            let horaIngresoSplit = hora_ingreso.split(':');
+
+            let hora_salida = horarioDia.salida;
+            let horaSalidaSplit = hora_salida.split(':');
+
+            let habilitarIngreso = differenceInMinutes(
+                new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaIngresoSplit[0], horaIngresoSplit[1], horaIngresoSplit[2]),
+                new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], hora, minuto, segundo)
+            )
+
+            let habilitarSalida = differenceInMinutes(
+                new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaSalidaSplit[0], horaSalidaSplit[1], horaSalidaSplit[2]),
+                new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], hora, minuto, segundo)
+            )
+
+            horariosDiaActual.push({ ...horarioDia, ingreso_habilitado: habilitarIngreso, salida_habilitada: habilitarSalida });
+
+            console.log(horarioDia.hora_salida);
+
+            if (horarioDia.hora_ingreso == null && habilitarIngreso <= -30) {
+                const { data } = asistenciaApi.put(`/horario/marcarFalta/${horarioDia.idHorarioAsistencia}`, {
+                    estado: 3
+                })
+            }
+
+            if (horarioDia.hora_salida == null && habilitarSalida <= -30) {
+
+                const salida = ti();
+
+                const { data } = asistenciaApi.post(`/horario/marcarAutoSalida/${horarioDia.idHorarioAsistencia}`, {
+                    hora_salida: salida
+                })
+            }
         }
     })
 
@@ -94,8 +159,8 @@ export const HorariosPage = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {horariosDiaActual.map(({ idHorarioAsistencia, dni, nombre, apellido, fecha, ingreso, salida, estado }) => (
-                                        <tr onClick={() => { console.log(idHorarioAsistencia) }} key={idHorarioAsistencia} className="bg-white border-b cursor-pointer">
+                                    {horariosDiaActual.map(({ idHorarioAsistencia, dni, nombre, apellido, fecha, ingreso, salida, hora_ingreso, hora_salida, estado, ingreso_habilitado, salida_habilitada }) => (
+                                        <tr onClick={() => { console.log(estado) }} key={idHorarioAsistencia} className="bg-white border-b">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">{dni}</td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {nombre} {apellido}
@@ -110,8 +175,17 @@ export const HorariosPage = () => {
                                                 {salida}
                                             </td>
                                             <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                <button onClick={() => navigate(`/horario/ingreso/${idHorarioAsistencia}`)} className={`p-2 bg-green-600 text-white font-semibold rounded-md mr-2 ${estado != null ? 'invisible' : ''} `}>Ingreso</button>
-                                                <button onClick={() => navigate(`/horario/salida/${idHorarioAsistencia}`)} className='p-2 bg-green-600 text-white font-semibold rounded-md'>Salida</button>
+
+                                                <button onClick={() => navigate(`/horario/ingreso/${idHorarioAsistencia}`)} className={`p-2 bg-green-600 text-white font-semibold rounded-md mr-2 
+                                                ${(ingreso_habilitado <= 14 && ingreso_habilitado >= -29 && hora_ingreso == null) ? '' : 'invisible'} `}>
+                                                    Ingreso
+                                                </button>
+
+                                                <button onClick={() => navigate(`/horario/salida/${idHorarioAsistencia}`)} className={`p-2 bg-green-600 text-white font-semibold rounded-md
+                                                ${(salida_habilitada <= 4 && salida_habilitada >= -29 && hora_salida == null && estado != 3) ? '' : 'invisible'} `}>
+                                                    Salida
+                                                </button>
+
                                             </td>
                                         </tr>
                                     ))}

@@ -11,7 +11,7 @@ const horarioFormFields = {
     horarioPassword: '',
 }
 
-export const IngresoForm = () => {
+export const SalidaForm = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -70,10 +70,10 @@ export const IngresoForm = () => {
 
     console.log(horaMarcadaSplit);
 
-    let hora_ingreso = horarioFind?.actividad.ingreso_actividad;
+    let hora_salida = horarioFind?.actividad.salida_actividad;
 
     console.log(horaMarcada);
-    console.log(hora_ingreso);
+    console.log(hora_salida);
 
     const marcadoHorarioSubmit = async (e) => {
         e.preventDefault();
@@ -84,37 +84,22 @@ export const IngresoForm = () => {
             let horaMarcada = ti();
             let horaMarcadaSplit = horaMarcada.split(':');
 
-            let horaIngresoSplit = hora_ingreso.split(':');
+            let horaSalidaSplit = hora_salida.split(':');
 
             const marcarAsistencia = differenceInMinutes(
-                new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaIngresoSplit[0], horaIngresoSplit[1], horaIngresoSplit[2]),
+                new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaSalidaSplit[0], horaSalidaSplit[1], horaSalidaSplit[2]),
                 new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaMarcadaSplit[0], horaMarcadaSplit[1], horaMarcadaSplit[2])
             )
 
             console.log(marcarAsistencia);
 
-            if (marcarAsistencia <= 14 && marcarAsistencia >= 0) {
+            if (marcarAsistencia <= 4 && marcarAsistencia >= -29) {
                 const { data } = await asistenciaApi.post(`/horario/marcar/${idHorarioAsistencia}`, {
-                    email: usuarioFind.email, password: horarioPassword, hora_ingreso: horaMarcada, horarioFind: horarioFind.idHorarioAsistencia, estado: 1
+                    email: usuarioFind.email, password: horarioPassword, hora_salida: horaMarcada
                 })
-                Swal.fire(`Ud. ingresó en el tiempo correspondiente. ¡Felicitaciones!`);
-                navigate(`/horarios`);
-            } else if (marcarAsistencia <= 0 && marcarAsistencia >= -15) {
-                const { data } = await asistenciaApi.post(`/horario/marcar/${idHorarioAsistencia}`, {
-                    email: usuarioFind.email, password: horarioPassword, hora_ingreso: horaMarcada, horarioFind: horarioFind.idHorarioAsistencia, estado: 1
-                })
-                Swal.fire(`Ud. ingresó ${parseInt(marcarAsistencia) * -1} minuto(s) después. *Normal*`);
-                navigate(`/horarios`);
-            } else if (marcarAsistencia <= -14 && marcarAsistencia >= -29) {
-                const { data } = await asistenciaApi.post(`/horario/marcar/${idHorarioAsistencia}`, {
-                    email: usuarioFind.email, password: horarioPassword, hora_ingreso: horaMarcada, horarioFind: horarioFind.idHorarioAsistencia, estado: 2
-                })
-                Swal.fire(`Ud. ingresó ${parseInt(marcarAsistencia) * -1} minuto(s) después. *Tardanza*`);
+                Swal.fire(`Se registró correctamente su hora de salida.`);
                 navigate(`/horarios`);
             } else {
-                const { data } = await asistenciaApi.post(`/horario/marcar/${idHorarioAsistencia}`, {
-                    email: usuarioFind.email, password: horarioPassword, horarioFind: horarioFind.idHorarioAsistencia, estado: 3
-                })
                 Swal.fire('Se excedió el tiempo límite');
                 navigate(`/horarios`);
             }
@@ -183,7 +168,7 @@ export const IngresoForm = () => {
 
                     <button className='w-full text-center text-white text-lg font-bold p-3 rounded-xl mb-3 duration-500 bg-blue-600 hover:bg-blue-700'
                         type='submit'>
-                        Marcar ingreso
+                        Marcar salida
                     </button>
 
                 </form>

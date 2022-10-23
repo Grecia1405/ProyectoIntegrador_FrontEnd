@@ -150,14 +150,18 @@ export const TablaHorarios = () => {
                                         <td className="text-sm text-left text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {actividad.salida_actividad}
                                         </td>
-                                        <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <td className="text-sm text-center text-gray-900 font-semibold px-6 py-4 whitespace-nowrap">
                                             {hora_ingreso == null ? '--:--' : hora_ingreso}
                                         </td>
-                                        <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <td className="text-sm text-center text-gray-900 font-semibold px-6 py-4 whitespace-nowrap">
                                             {hora_salida == null ? '--:--' : hora_salida}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {estado == null ? 'Por definirse' : estado}
+                                            {estado?.idEstado == null ? <p className='font-bold bg-gray-800 text-gray-50 p-1 rounded-xl'>Por definirse</p>
+                                                : estado?.idEstado == 1 ? <p className='font-bold bg-green-500 text-gray-50 p-1 rounded-xl'>{estado.descripcion}</p>
+                                                    : estado?.idEstado == 2 ? <p className='font-bold bg-yellow-500 text-gray-50 p-1 rounded-xl'>{estado.descripcion}</p>
+                                                        : <p className='font-bold bg-red-500 text-gray-50 p-1 rounded-xl'>{estado.descripcion}</p>
+                                            }
                                         </td>
                                     </tr>
                                 ))}

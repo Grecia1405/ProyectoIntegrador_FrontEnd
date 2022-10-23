@@ -11,7 +11,8 @@ import { useActividadStore } from '../../hook/useActividadStore'
 import uuid from 'react-uuid'
 
 /* Date FNS */
-import { isAfter } from 'date-fns'
+import { format, formatISO, isAfter } from 'date-fns'
+import { subDays } from 'date-fns/esm'
 
 
 const registerForm = {
@@ -24,6 +25,8 @@ const registerForm = {
 }
 
 export const RegistroActividadForm = ({ usuarios }) => {
+
+    const { user } = useAuthStore();
 
     const [idUsuarioForm, setidUsuarioForm] = useState('');
     const [diaForm, setDiaForm] = useState('');
@@ -40,13 +43,16 @@ export const RegistroActividadForm = ({ usuarios }) => {
         setActividades(data.actividades_All);
     }
 
-    let fechaInicio = new Date().toISOString().split("T")[0];
+    let fecha = new Date();
+    let fechaLocalActual = fecha.toLocaleString();
+    let fechaLocalActualSplit = fechaLocalActual.split(',');
+    let fechaHoy = fechaLocalActualSplit[0].replaceAll('/', '-');
+    let fechas = fechaHoy.split('-').reverse();
+    let fechaActual = fechas[0] + '-' + fechas[1] + '-' + fechas[2]
 
     useEffect(() => {
         obtenerActividades();
     }, [])
-
-    console.log(actividades);
 
     const { idUsuario, dia, ingreso_actividad, salida_actividad, inicio_actividad, fin_actividad, onInputChange, onResetForm } = useForm(registerForm);
 
@@ -68,8 +74,9 @@ export const RegistroActividadForm = ({ usuarios }) => {
                     setError(null);
                 }, 3000)
                 return;
-            } else if (ingreso_actividad < '08:00' || salida_actividad > '21:00') {
-                setError('El horario de trabajo es de 8:00 a.m. a 9:00 p.m.');
+            } else if (ingreso_actividad < '08:00' || salida_actividad > '23:59') {
+                setError('El horario de trabajo es de 8:00 a.m. a 11:59 p.m.');
+                /* setError('El horario de trabajo es de 8:00 a.m. a 10:00 p.m.'); */
                 setTimeout(() => {
                     setError(null);
                 }, 3000)
@@ -96,7 +103,7 @@ export const RegistroActividadForm = ({ usuarios }) => {
                 startSavingActividad({
                     idActividad: id_actividad, idUsuario: idUsuarioForm, dia: diaForm, ingreso_actividad: ingreso_actividad,
                     salida_actividad: salida_actividad, inicio_actividad: inicio_actividad,
-                    fin_actividad: fin_actividad
+                    fin_actividad: fin_actividad, createdByUser: user.idUsuario
                 })
                 setSuccess(true);
                 setTimeout(() => {
@@ -156,7 +163,6 @@ export const RegistroActividadForm = ({ usuarios }) => {
                                 name="ingreso_actividad"
                                 value={ingreso_actividad}
                                 onChange={onInputChange}
-                            /* min="08:00" max="18:00" */
                             />
                         </div>
 
@@ -175,7 +181,7 @@ export const RegistroActividadForm = ({ usuarios }) => {
                                 name="inicio_actividad"
                                 value={inicio_actividad}
                                 onChange={onInputChange}
-                                min={fechaInicio}
+                                min={fechaActual}
                             />
                         </div>
 
@@ -185,7 +191,7 @@ export const RegistroActividadForm = ({ usuarios }) => {
                                 name="fin_actividad"
                                 value={fin_actividad}
                                 onChange={onInputChange}
-                                min={fechaInicio}
+                                min={fechaActual}
                             />
                         </div>
                     </div>

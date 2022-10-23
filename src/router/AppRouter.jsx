@@ -27,6 +27,7 @@ import { MainUsuario } from '../usuario/pages/MainUsuario'
 /* Páginas de Horarios - General */
 import { HorariosPage } from '../horarios/pages/HorariosPage'
 import { IngresoForm } from '../horarios/components/IngresoForm'
+import { SalidaForm } from '../horarios/components/SalidaForm'
 
 
 export const AppRouter = () => {
@@ -64,7 +65,7 @@ export const AppRouter = () => {
                         <>
                             <Route path='/horarios/*' element={<HorariosPage />} />
                             <Route path='/horario/ingreso/:id' element={<IngresoForm />} />
-                            <Route path='/horario/salida/:id' element={<HorariosPage />} />
+                            <Route path='/horario/salida/:id' element={<SalidaForm />} />
                             <Route path='/horarios/*' element={<Navigate to="/horarios" />} />
 
                             <Route path='/auth/*' element={<LoginPage />} />
