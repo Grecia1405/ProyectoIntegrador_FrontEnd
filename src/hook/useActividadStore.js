@@ -12,6 +12,8 @@ export const useActividadStore = () => {
 
         actividadDia(formulario);
 
+        console.log(formulario);
+
     }
 
     const startUpdateActividad = async (formulario) => {

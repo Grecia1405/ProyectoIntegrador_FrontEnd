@@ -62,18 +62,10 @@ export const IngresoForm = () => {
 
     let fechaActual = format(new Date(), 'yyyy-MM-dd');
     let fechaActualSplit = fechaActual.split('-');
-
-    console.log(fechaActualSplit);
-
     let horaMarcada = ti();
     let horaMarcadaSplit = horaMarcada.split(':');
 
-    console.log(horaMarcadaSplit);
-
     let hora_ingreso = horarioFind?.actividad.ingreso_actividad;
-
-    console.log(horaMarcada);
-    console.log(hora_ingreso);
 
     const marcadoHorarioSubmit = async (e) => {
         e.preventDefault();
@@ -90,8 +82,6 @@ export const IngresoForm = () => {
                 new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaIngresoSplit[0], horaIngresoSplit[1], horaIngresoSplit[2]),
                 new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaMarcadaSplit[0], horaMarcadaSplit[1], horaMarcadaSplit[2])
             )
-
-            console.log(marcarAsistencia);
 
             if (marcarAsistencia <= 14 && marcarAsistencia >= 0) {
                 const { data } = await asistenciaApi.post(`/horario/marcar/${idHorarioAsistencia}`, {
