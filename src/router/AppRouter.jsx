@@ -29,6 +29,9 @@ import { HorariosPage } from '../horarios/pages/HorariosPage'
 import { IngresoForm } from '../horarios/components/IngresoForm'
 import { SalidaForm } from '../horarios/components/SalidaForm'
 
+/* Páginas de Reportes */
+import { ReporteAdmin } from '../admin/pages/ReporteAdmin'
+
 
 export const AppRouter = () => {
 
@@ -89,6 +92,8 @@ export const AppRouter = () => {
                             <Route path='/actividades/registro' element={<RegistroActividad />} />
                             <Route path='/actividades/editar/:id' element={<EditarActividad />} />
                             <Route path='/*' element={<Navigate to="/actividades" />} />
+
+                            <Route path='/reportes' element={<ReporteAdmin />} />
                         </>
                     ) : (
                         <>
