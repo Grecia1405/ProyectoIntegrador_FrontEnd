@@ -102,15 +102,13 @@ export const HorariosPage = () => {
 
             horariosDiaActual.push({ ...horarioDia, ingreso_habilitado: habilitarIngreso, salida_habilitada: habilitarSalida });
 
-            console.log(horarioDia.hora_salida);
-
             if (horarioDia.hora_ingreso == null && habilitarIngreso <= -30) {
                 const { data } = asistenciaApi.put(`/horario/marcarFalta/${horarioDia.idHorarioAsistencia}`, {
                     estado: 3
                 })
             }
 
-            if (horarioDia.hora_salida == null && habilitarSalida <= -30) {
+            if (horarioDia.hora_salida == null && habilitarSalida <= -30 && horarioDia.hora_ingreso != null) {
 
                 const salida = ti();
 

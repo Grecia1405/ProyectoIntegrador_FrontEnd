@@ -10,6 +10,7 @@ import { ThreeCircles } from 'react-loader-spinner'
 import { MainAdmin } from '../admin/pages/MainAdmin'
 import { Registro as RegistroUsuario } from '../admin/usuarios/Registro'
 import { Editar as EditarUSuario } from '../admin/usuarios/Editar'
+import { ResetPassword } from '../auth/pages/ResetPassword'
 
 /* Páginas de Feriados */
 import { FeriadoAdmin } from '../admin/pages/FeriadoAdmin'
@@ -31,7 +32,6 @@ import { SalidaForm } from '../horarios/components/SalidaForm'
 
 /* Páginas de Reportes */
 import { ReporteAdmin } from '../admin/pages/ReporteAdmin'
-
 
 export const AppRouter = () => {
 
@@ -70,6 +70,8 @@ export const AppRouter = () => {
                             <Route path='/horario/ingreso/:id' element={<IngresoForm />} />
                             <Route path='/horario/salida/:id' element={<SalidaForm />} />
                             <Route path='/horarios/*' element={<Navigate to="/horarios" />} />
+
+                            <Route path='/resetpassword' element={<ResetPassword />} />
 
                             <Route path='/auth/*' element={<LoginPage />} />
                             <Route path='/*' element={<Navigate to="/auth/login" />} />

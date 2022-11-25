@@ -12,6 +12,7 @@ export const LoginPage = () => {
 
     const { errorMessage, startLogin } = useAuthStore();
     const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm(loginFormFields);
 
@@ -44,7 +45,7 @@ export const LoginPage = () => {
                 <div className='relative w-5/6 md:w-3/6 lg:w-2/6 xl:w-96 border p-5 rounded-xl bg-white'>
 
                     <div className='text-center mt-5 mb-10 flex justify-center'>
-                        <h2 className='text-3xl uppercase font-extrabold'>Asistencia</h2>
+                        <h2 className='text-3xl uppercase font-extrabold'>Asistenciapp</h2>
                     </div>
                     <form onSubmit={loginSubmit} className="px-3">
                         <div className='mb-8'>
@@ -59,15 +60,23 @@ export const LoginPage = () => {
                         </div>
                         <div className='mb-8'>
                             <label className='block text-sm mb-2 font-semibold'>Password</label>
-                            <input className="w-full text-sm py-1 border-b-2 border-gray-600 transition-colors duration-500 focus:outline-none focus:border-blue-600"
-                                type="password"
-                                name="loginPassword"
-                                value={loginPassword}
-                                onChange={onLoginInputChange}
-                                autoComplete="false"
-                            />
+                            <div className='relative'>
+                                <input className="w-full text-sm py-1 border-b-2 border-gray-600 transition-colors duration-500 focus:outline-none focus:border-blue-600"
+                                    type={showPassword ? "text" : "password"}
+                                    name="loginPassword"
+                                    value={loginPassword}
+                                    onChange={onLoginInputChange}
+                                    autoComplete="false"
+                                />
+                                <p className='cursor-pointer font-extrabold absolute right-2 bottom-1' onClick={() => { setShowPassword(!showPassword) }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                                        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                        <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clipRule="evenodd" />
+                                    </svg>
+                                </p>
+                            </div>
                             <div className='text-right pt-2'>
-                                <a className='text-sm cursor-pointer underline'>¿Olvidaste tu contraseña?</a>
+                                <Link to="/resetpassword" className='text-sm cursor-pointer underline text-blue-500'>¿Olvidaste tu contraseña?</Link>
                             </div>
                         </div>
 

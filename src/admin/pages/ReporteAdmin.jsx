@@ -83,7 +83,7 @@ export const ReporteAdmin = () => {
             <div className='w-full p-5 h-screen'>
                 <div className='bg-white h-full rounded-xl p-2 shadow-xl'>
                     <h2 className='text-center text-3xl font-semibold my-8 uppercase'>Reporte de asistencias</h2>
-                    <div className='w-full flex justify-center px-8'>                        
+                    <div className='w-full flex justify-center px-8'>
                         <button onClick={createAndDownloadPdf} className='px-3 py-2 rounded-xl text-white bg-green-600'>Generar reporte</button>
                     </div>
                     <TablaReporte listadoHorarios={listadoHorarios} />
