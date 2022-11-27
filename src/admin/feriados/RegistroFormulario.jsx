@@ -32,8 +32,6 @@ export const RegistroFormulario = () => {
 
     const fechas = [];
 
-    console.log(fechas);
-
     feriados.map(feriado => {
         fechas.push(feriado.fecha.toString());
     });

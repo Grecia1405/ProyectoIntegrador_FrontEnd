@@ -11,14 +11,12 @@ export const Tabla = ({ usuarios }) => {
         const { data } = await asistenciaApi.put(`/usuario/eliminar/${idUsuario}`);
         Swal.fire('La cuenta del usuario está inactiva');
         navigate(`/usuarios}`)
-        console.log(data);
     }
 
     const restaurarUsuario = async (idUsuario) => {
         const { data } = await asistenciaApi.put(`/usuario/restaurar/${idUsuario}`);
         Swal.fire('La cuenta del usuario se activó nuevamente');
         navigate(`/usuarios}`)
-        console.log(data);
     }
 
 
@@ -40,7 +38,7 @@ export const Tabla = ({ usuarios }) => {
                                         Email
                                     </th>
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
-                                        DNI
+                                        Feriados
                                     </th>
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Área
@@ -57,7 +55,7 @@ export const Tabla = ({ usuarios }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {usuarios.map(({ idUsuario, nombre, apellido, email, dni, area, tarifa_hora, actividad_usuario }) => (
+                                {usuarios.map(({ idUsuario, nombre, apellido, email, dni, tipo, area, tarifa_hora, actividad_usuario }) => (
                                     <tr key={idUsuario} className="bg-white border-b cursor-pointer">
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center">{dni}</td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
@@ -67,7 +65,7 @@ export const Tabla = ({ usuarios }) => {
                                             {email}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {dni}
+                                            {tipo == 0 ? 'Sí trabaja' : 'No trabaja'}
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {area.descripcion}

@@ -117,9 +117,6 @@ export const IngresoForm = () => {
             }, 2000)
             return;
         }
-
-
-        /* console.log({ email: usuarioFind.email, password: horarioPassword, hora_ingreso: marcado_inicio, horarioFind: horarioFind.idHorarioAsistencia }); */
     }
 
     return (

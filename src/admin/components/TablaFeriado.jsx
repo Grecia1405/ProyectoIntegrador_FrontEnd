@@ -11,7 +11,6 @@ export const TablaFeriado = ({ feriados }) => {
         const { data } = await asistenciaApi.delete(`/feriado/eliminar/${idFeriado}`);
         Swal.fire('Feriado eliminado');
         navigate(`/feriados`)
-        console.log(data);
     }
 
     return (

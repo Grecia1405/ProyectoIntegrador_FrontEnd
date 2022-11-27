@@ -130,17 +130,6 @@ export const RegistroFormulario = () => {
         }
     }
 
-    /* useEffect(() => {
-        if (errorMessage !== undefined) {
-            setError(true);
-        }
-
-        setTimeout(() => {
-            setError(false);
-        }, 3000)
-
-    }, [errorMessage]) */
-
     return (
         <>
             <section className="w-5/6 p-6 mx-auto bg-white rounded-md">
@@ -180,7 +169,6 @@ export const RegistroFormulario = () => {
                             <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
                                 name="dni"
                                 value={dni}
-                                /* minLength={8} */
                                 maxLength={8}
                                 onChange={onInputChange}
                             />
@@ -210,7 +198,7 @@ export const RegistroFormulario = () => {
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
 
                         <div>
-                            <label className="text-gray-800">Tipo</label>
+                            <label className="text-gray-800">Feriados</label>
                             <select className="form-select appearance-none block w-full px-4 py-2 mt-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
                             border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example"
                                 id="tipo"
@@ -218,14 +206,9 @@ export const RegistroFormulario = () => {
                                 onChange={e => setTipoForm(e.target.value)}
                             >
                                 <option value="-1">Seleccione un tipo</option>
-                                <option value="0">Trabaja feriado</option>
+                                <option value="0">Sí trabaja</option>
                                 <option value="1">No trabaja</option>
                             </select>
-                            {/* <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
-                                name="tipo"
-                                value={tipo}
-                                onChange={onInputChange}
-                            /> */}
                         </div>
 
                         <div>
@@ -249,11 +232,6 @@ export const RegistroFormulario = () => {
                                 <option value="1">Administración</option>
                                 <option value="2">Campo</option>
                             </select>
-                            {/* <input type="text" className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40-300 focus:outline-none focus:ring"
-                                name="idArea"
-                                value={idArea}
-                                onChange={onInputChange}
-                            /> */}
                         </div>
                     </div>
 

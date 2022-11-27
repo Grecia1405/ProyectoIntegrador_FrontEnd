@@ -32,6 +32,7 @@ import { SalidaForm } from '../horarios/components/SalidaForm'
 
 /* Páginas de Reportes */
 import { ReporteAdmin } from '../admin/pages/ReporteAdmin'
+import { PasswordChange } from '../usuario/pages/PasswordChange'
 
 export const AppRouter = () => {
 
@@ -100,6 +101,7 @@ export const AppRouter = () => {
                     ) : (
                         <>
                             <Route path='/actividades' element={<MainUsuario />} />
+                            <Route path='/password' element={<PasswordChange />} />
                             <Route path='/*' element={<Navigate to="/actividades" />} />
                         </>
                     )

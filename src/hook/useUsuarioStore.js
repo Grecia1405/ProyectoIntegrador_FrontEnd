@@ -12,9 +12,7 @@ export const useUsuarioStore = () => {
 
         try {
             const { data } = await asistenciaApi.post('/usuario/registro', formulario);
-            console.log(data);
-            dispatch(onAddNewUser(formulario))
-
+            dispatch(onAddNewUser(formulario));
         } catch (error) {
             dispatch(onError(error.response.data?.msg));
             setTimeout(() => {
@@ -24,13 +22,8 @@ export const useUsuarioStore = () => {
     }
 
     const startUpdateUser = async (formulario) => {
-
-        console.log(formulario);
-
         try {
             const { data } = await asistenciaApi.put(`/usuario/editar/${formulario.idUsuario}`, formulario);
-            console.log(data);
-
         } catch (error) {
             dispatch(onError(error.response.data?.msg));
             setTimeout(() => {

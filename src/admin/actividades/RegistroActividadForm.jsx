@@ -3,7 +3,6 @@ import { useState } from 'react'
 import asistenciaApi from '../../api/asistenciaApi'
 import { useAuthStore } from '../../hook/useAuthStore'
 import { useForm } from '../../hook/useForm'
-import { useUsuarioStore } from '../../hook/useUsuarioStore'
 import { RegistroActividadExcel } from './RegistroActividadExcel'
 import { useActividadStore } from '../../hook/useActividadStore'
 
@@ -11,9 +10,7 @@ import { useActividadStore } from '../../hook/useActividadStore'
 import uuid from 'react-uuid'
 
 /* Date FNS */
-import { format, formatISO, isAfter } from 'date-fns'
-import { subDays } from 'date-fns/esm'
-
+import { isAfter } from 'date-fns'
 
 const registerForm = {
     idUsuario: '',

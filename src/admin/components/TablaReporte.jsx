@@ -1,12 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import asistenciaApi from '../../api/asistenciaApi';
-import Swal from 'sweetalert2'
 
 export const TablaReporte = ({ listadoHorarios }) => {
-
-    console.log(listadoHorarios);
-
 
     return (
         <div className="flex flex-col mt-3">
@@ -40,12 +34,6 @@ export const TablaReporte = ({ listadoHorarios }) => {
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Estado
                                     </th>
-                                    {/* <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
-                                        Estado
-                                    </th>
-                                    <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
-                                        Acciones
-                                    </th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,7 +60,7 @@ export const TablaReporte = ({ listadoHorarios }) => {
                                         </td>
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {estado == 1 ? 'Normal' : estado == 2 ? 'Tardanza' : 'Falta'}
-                                        </td>                                        
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

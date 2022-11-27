@@ -63,17 +63,10 @@ export const SalidaForm = () => {
     let fechaActual = format(new Date(), 'yyyy-MM-dd');
     let fechaActualSplit = fechaActual.split('-');
 
-    console.log(fechaActualSplit);
-
     let horaMarcada = ti();
     let horaMarcadaSplit = horaMarcada.split(':');
 
-    console.log(horaMarcadaSplit);
-
     let hora_salida = horarioFind?.actividad.salida_actividad;
-
-    console.log(horaMarcada);
-    console.log(hora_salida);
 
     const marcadoHorarioSubmit = async (e) => {
         e.preventDefault();
@@ -90,8 +83,6 @@ export const SalidaForm = () => {
                 new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaSalidaSplit[0], horaSalidaSplit[1], horaSalidaSplit[2]),
                 new Date(fechaActualSplit[0], parseInt(fechaActualSplit[1]) - 1, fechaActualSplit[2], horaMarcadaSplit[0], horaMarcadaSplit[1], horaMarcadaSplit[2])
             )
-
-            console.log(marcarAsistencia);
 
             if (marcarAsistencia <= 4 && marcarAsistencia >= -29) {
                 const { data } = await asistenciaApi.post(`/horario/marcar/${idHorarioAsistencia}`, {
@@ -112,9 +103,6 @@ export const SalidaForm = () => {
             }, 2000)
             return;
         }
-
-
-        /* console.log({ email: usuarioFind.email, password: horarioPassword, hora_ingreso: marcado_inicio, horarioFind: horarioFind.idHorarioAsistencia }); */
     }
 
     return (

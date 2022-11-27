@@ -30,8 +30,6 @@ export const RegistroActividadExcel = () => {
         const file = e.target.files[0];
         const fileType = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
 
-        console.log(file);
-
         if (file) {
             if (file && fileType.includes(file.type)) {
 

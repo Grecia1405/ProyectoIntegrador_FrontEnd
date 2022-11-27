@@ -1,26 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import asistenciaApi from '../../api/asistenciaApi';
-import Swal from 'sweetalert2'
 
 export const TablaActividad = ({ actividades }) => {
-
-    /* const navigate = useNavigate();
-
-    const eliminarUsuario = async (idUsuario) => {
-        const { data } = await asistenciaApi.put(`/usuario/eliminar/${idUsuario}`);
-        Swal.fire('La cuenta del usuario está inactiva');
-        navigate(`/usuarios}`)
-        console.log(data);
-    }
-
-    const restaurarUsuario = async (idUsuario) => {
-        const { data } = await asistenciaApi.put(`/usuario/restaurar/${idUsuario}`);
-        Swal.fire('La cuenta del usuario se activó nuevamente');
-        navigate(`/usuarios}`)
-        console.log(data);
-    } */
-
 
     return (
         <div className="flex flex-col mt-3">
@@ -51,12 +31,6 @@ export const TablaActividad = ({ actividades }) => {
                                     <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
                                         Fin
                                     </th>
-                                    {/* <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
-                                        Estado
-                                    </th>
-                                    <th scope="col" className="text-sm text-center font-medium text-white px-6 py-4">
-                                        Acciones
-                                    </th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,20 +55,6 @@ export const TablaActividad = ({ actividades }) => {
                                         <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                             {fin_actividad}
                                         </td>
-                                        {/* <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {estado === "0" ? 'Activo' : 'Finalizado'}
-                                        </td> */}
-                                        {/* <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            {actividad_usuario === "0" ? 'Activo' : 'Inactivo'}
-                                        </td>
-                                        <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap flex gap-3">
-                                            <button onClick={() => navigate(`/usuarios/editar/${idUsuario}`)} className='p-2 bg-yellow-500 text-white font-semibold rounded-md'>Editar</button>
-                                            {actividad_usuario == 0
-                                                ?
-                                                <button onClick={() => { eliminarUsuario(idUsuario) }} className='p-2 bg-red-500 text-white font-semibold rounded-md'>Eliminar</button>
-                                                : <button onClick={() => { restaurarUsuario(idUsuario) }} className='p-2 bg-blue-500 text-white font-semibold rounded-md'>Restaurar</button>
-                                            }
-                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>

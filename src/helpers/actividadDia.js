@@ -6,6 +6,9 @@ export const actividadDia = async (formulario) => {
 
     const { idActividad, idUsuario, dia, ingreso_actividad, salida_actividad, inicio_actividad, fin_actividad } = await formulario;
 
+    const { data: dataUser } = await asistenciaApi.get(`/usuario/${idUsuario}`);
+    const { usuario } = dataUser;
+
     const result = eachDayOfInterval({
         start: new Date(inicio_actividad),
         end: new Date(fin_actividad)
@@ -62,13 +65,36 @@ export const actividadDia = async (formulario) => {
         fechasDiaFormat.push(format(new Date(fecha), 'yyyy-MM-dd'));
     })
 
-    fechasDiaFormat.map(fecha => {
-        const { data } = asistenciaApi.post('/horario/crear', {
-            idActividad,
-            idUsuario,
-            dia,
-            fechaAsistencia: fecha
-        });
+    const { data } = await asistenciaApi.get('/feriado');
+    const { feriados_All } = data;
+
+    let feriados = [];
+
+    feriados_All.map(feriado => {
+        feriados.push(feriado.fecha);
     })
 
+    if (usuario.tipo == 0) {
+        fechasDiaFormat.map(fecha => {
+            const { data } = asistenciaApi.post('/horario/crear', {
+                idActividad,
+                idUsuario,
+                dia,
+                fechaAsistencia: fecha
+            });
+        });
+    }
+
+    if (usuario.tipo == 1) {
+        fechasDiaFormat.map(fecha => {
+            if (!feriados.includes(fecha)) {
+                const { data } = asistenciaApi.post('/horario/crear', {
+                    idActividad,
+                    idUsuario,
+                    dia,
+                    fechaAsistencia: fecha
+                });
+            }
+        })
+    }
 }

@@ -48,7 +48,6 @@ export const TablaHorarios = () => {
         }
     })
 
-    console.log(horarioUsuario);
     const { startDate, endDate, onInputChange } = useForm(filterForm);
 
     const submitFilter = async (e) => {

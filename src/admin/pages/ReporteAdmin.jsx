@@ -1,10 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import asistenciaApi from '../../api/asistenciaApi';
 import { Sidebar } from '../components/Sidebar'
-import { TablaActividad } from '../components/TablaActividad';
 
 import saveAs from 'file-saver'
 import { TablaReporte } from '../components/TablaReporte';
@@ -51,8 +49,6 @@ export const ReporteAdmin = () => {
         })
     })
 
-    console.log(listadoHorarios);
-
     const createAndDownloadPdf = () => {
         asistenciaApi.post('reporte/create-pdf', listadoHorarios)
             .then(() => asistenciaApi.get('reporte/fetch-pdf', { responseType: 'blob' }))
@@ -62,20 +58,6 @@ export const ReporteAdmin = () => {
                 saveAs(pdfBlob, 'reporte.pdf');
             })
     }
-
-    /* console.log(actividades);
-    console.log(horarios); */
-
-    /* const [actividades, setActividades] = useState([]);
-
-    const listarActividades = async () => {
-        const { data } = await asistenciaApi.get('actividad/');
-        setActividades(data.actividades_All);
-    }
-
-    useEffect(() => {
-        listarActividades();
-    }, []) */
 
     return (
         <div className='flex'>
