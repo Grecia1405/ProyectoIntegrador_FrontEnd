@@ -7,7 +7,6 @@ import { useAuthStore } from '../../hook/useAuthStore';
 
 export const RegistroActividadExcel = () => {
 
-
     const { user } = useAuthStore();
     const { startSavingActividad } = useActividadStore();
 
@@ -46,12 +45,6 @@ export const RegistroActividadExcel = () => {
 
                 setColumns(jsonData[0]);
                 setExcelData(jsonData);
-                /* let reader = new FileReader();
-                reader.readAsArrayBuffer(selectedFile);
-                reader.onload = (e) => {
-                    setExcelFileError(null);
-                    setExcelFile(e.target.result);
-                } */
             } else {
                 setExcelFileError('Por favor, seleccione un archivo excel.')
                 setExcelFile(null);

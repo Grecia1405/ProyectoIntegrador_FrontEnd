@@ -1,9 +1,7 @@
-
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import asistenciaApi from '../../api/asistenciaApi'
 import { useFeriado } from '../../hook/useFeriado'
-// import { useAuthStore } from '../../hook/useAuthStore'
 import { useForm } from '../../hook/useForm'
 
 const registerForm = {
@@ -13,8 +11,6 @@ const registerForm = {
 }
 
 export const RegistroFormulario = () => {
-
-    // const { user } = useAuthStore();
 
     const { startSavingFeriado } = useFeriado();
     const [error, setError] = useState(false);
@@ -42,7 +38,6 @@ export const RegistroFormulario = () => {
 
     const registroSubmit = async (e) => {
 
-        /* TODO: Validaciones pendientes */
         e.preventDefault();
 
         if (!anio || !fecha || !descripcion) {
@@ -74,9 +69,7 @@ export const RegistroFormulario = () => {
             }, 3000)
 
             onResetForm();
-
         }
-
     }
 
 

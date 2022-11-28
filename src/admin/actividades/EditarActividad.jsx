@@ -1,7 +1,5 @@
 import React from 'react'
 import { Sidebar } from '../components/Sidebar'
-/* import { EditarFormulario } from './EditarFormulario' */
-
 
 export const EditarActividad = () => {
     return (
@@ -11,7 +9,6 @@ export const EditarActividad = () => {
                 <div className='w-full p-5 h-full md:h-screen bg-gray-100'>
                     <div className='bg-white rounded-xl p-2 h-full shadow-xl'>
                         <h2 className='text-center text-3xl font-semibold my-12 uppercase'>Editar actividad</h2>
-                        {/* <EditarFormulario /> */}
                     </div>
                 </div>
             </div>

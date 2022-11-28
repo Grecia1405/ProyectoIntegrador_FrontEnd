@@ -19,14 +19,12 @@ export const PasswordChange = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    console.log(user.idUsuario);
-
     const handlePasswordChange = async (e) => {
         e.preventDefault();
 
         if (newPassword == '') {
             setError(true);
-            setErrorMessage('Todos los campos son obligatorios');
+            setErrorMessage('El campo es obligatorio.');
             setTimeout(() => {
                 setError(false);
                 setErrorMessage('');

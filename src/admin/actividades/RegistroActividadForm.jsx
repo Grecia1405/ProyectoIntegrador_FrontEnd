@@ -73,7 +73,6 @@ export const RegistroActividadForm = ({ usuarios }) => {
                 return;
             } else if (ingreso_actividad < '08:00' || salida_actividad > '23:59') {
                 setError('El horario de trabajo es de 8:00 a.m. a 11:59 p.m.');
-                /* setError('El horario de trabajo es de 8:00 a.m. a 10:00 p.m.'); */
                 setTimeout(() => {
                     setError(null);
                 }, 3000)

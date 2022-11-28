@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import asistenciaApi from '../../api/asistenciaApi'
@@ -52,7 +51,6 @@ export const RegistroFormulario = () => {
 
     const registroSubmit = async (e) => {
 
-        /* TODO: Validaciones pendientes */
         e.preventDefault();
 
         const tipo_val = document.getElementById('tipo').value;

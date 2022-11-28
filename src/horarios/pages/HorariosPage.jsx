@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { differenceInMinutes, format, getMinutes, sub } from 'date-fns';
+import { differenceInMinutes, format } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom'
 import asistenciaApi from '../../api/asistenciaApi';
 
